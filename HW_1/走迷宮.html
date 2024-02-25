@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="file">
+    <script>
+        var aaaa = [1,2,3]
+        console.log(aaaa)
+        document.getElementById("file").onchange =function change(){ //網頁.根據id取得元素.當發生變化時
+            var file = this.files[0];
+            var reader = new FileReader();
+            var R = [];
+            
+            reader.onload = function fileReadCompleted() { //讀取完成時觸發
+                var txt_split_1 = reader.result.split(/\r\n|\n/g);
+                var i = 0;
+                var txt_split_2 = [];
+                while(i<txt_split_1.length){
+                    txt_split_1[i] = txt_split_1[i]+"\n"
+                    txt_split_2.push(txt_split_1[i].split(""));
+                    i++
+                }
+                var i0 = 0, j0 = 0,i1 = 1,j1 = 1;
+                var TF = true;
+                while(TF){
+                    i0 = (Math.random()*88888).toFixed() % txt_split_2.length;
+                    j0 = (Math.random()*77777).toFixed() % txt_split_2[0].length;
+                    i1 = (Math.random()*88888).toFixed() % txt_split_2.length;
+                    j1 = (Math.random()*77777).toFixed() % txt_split_2[0].length;
+                    console.log(TF);
+                    if (i0 == i1 && j0 == j1){
+                        continue;
+                    }
+                    if ((txt_split_2[i0][j0] != ' ') || (txt_split_2[i1][j1] != ' ')){
+                        continue;
+                    }
+                    
+                    TF = false;
+                }
+                R.push([i0,j0]);
+                txt_split_2[R[0][0]][R[0][1]] = 'N';
+                while(R.length != []){
+                    console.log(R.at(-1));
+                    if (R.at(-1)[0] == i1 && R.at(-1)[1] == j1){
+                        break;
+                    }
+                    walk(txt_split_2,R);
+                }
+
+
+
+                document.getElementById("f_txt_1").innerHTML = F_replace(reader.result);
+                document.getElementById("f_txt_2").innerHTML = F_replace(txt_split_2.join().replaceAll(',',""));
+                document.getElementById("start").innerHTML = "由0開始算起，起點為"+i0+","+j0+"終點為"+i1+","+j1;
+
+
+
+            }; 
+            reader.readAsText(this.files[0]);//將內容儲存至reader
+        }
+
+
+
+        function walk(A,R){
+            var m = A.length, n = A[0].length;
+            var [i,j] = R.at(-1);
+            switch('n'){
+                case 'n':
+                    if(i>0 && A[i-1][j] == ' '){
+                        R.push([--i,j]);
+                        A[i][j] = 'N'
+                        break;
+                    }
+                case 'e':
+                    if(j+1<n && A[i][j+1] == ' '){
+                        R.push([i,++j]);
+                        A[i][j] = 'N'
+                        break;
+                    }
+                case 'w':
+                    if(j>0 && A[i][j-1] == ' '){
+                        R.push([i,--j]);
+                        A[i][j] = 'N'
+                        break;
+                    }
+                case 's':
+                    if(i+1<m && A[i+1][j] == ' '){
+                        R.push([++i,j]);
+                        A[i][j] = 'N'
+                        break;
+                    }
+                default:
+                    R.pop();
+            }
+        }
+
+        function F_replace(txt){
+            txt = txt.replaceAll(/\r\n|\n/g,"<br>");
+            txt = txt.replaceAll(" ","&nbsp");
+            //正規表達式，匹配\r\n及\n，後面加個g代表搜尋全部
+            //這裡將迴車符號等換成html中的換行字符<br>
+            //將id為f_txt的那行替換為txt內的文字
+            return txt;
+        }        
+    </script>
+    <h1>走迷宮前</h1>
+    <div id = "f_txt_1" style="font-family: monospace;font-size: 25px;color: rgb(38, 0, 255);"></div>
+    <hr></hr>
+    <h1>走迷宮後</h1>
+    <span id="start"></span><span id="end"></span>
+    <div id = "f_txt_2" style="font-family: monospace;font-size: 25px;color: rgb(38, 0, 255);"></div>
+    
+</body>
+
+</html>

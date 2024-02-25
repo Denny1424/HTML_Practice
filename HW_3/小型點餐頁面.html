@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>排隊點餐</title>
+
+    <style>
+        #button_dian{
+            background-color: #ECCE69;
+            color:#1B54B8;
+            transition: all .3s linear;
+        }
+        #button_dian:hover{
+            background-color: #F57A78;
+        }
+        #button_check{
+            background-color: #ECCE69;
+            color:#1B54B8;
+            transition: all .3s linear;
+        }
+        #button_check:hover{
+            background-color: #F57A78;
+        }
+        #Meals{
+            background-color: #88BCEC;
+            color: rgb(22, 95, 22);
+        }
+        h2{
+            color:#7548FA;
+        }
+        .ker{
+            color :rgb(17, 77, 17)
+        }
+        .pai{
+            color :rgb(163, 46, 3)
+        }
+        .tixing{
+            color: rgb(12, 116, 90);
+        }
+        .b_kdc{
+            font-size: 1cm;
+            display:flex; 
+            justify-content: flex-start ;
+            flex-wrap: nowrap;
+            flex-direction:row;
+            align-content :center;
+        }
+        .kdc{
+            flex-basis:150px;
+            overflow:hidden;
+            text-overflow: ellipsis;
+            padding-left:5px;
+            padding-right:5px;
+        }
+    </style>
+</head>
+<body background = "dsBuffer.bmp.png">
+    「我 汪博智 自己思考解決、絕無抄襲」
+    <h1></h1>
+    <div style="display:flex;flex-wrap: nowrap;flex-direction:row;font-weight:bold;justify-content: center;">
+        <div style="max-height:1200px ;max-width: 1130px;flex-basis: 50%;"><img src = "早餐.png"style="width:100%;max-height:100%"></div>
+        <div style="padding-left: 2%; height: auto;width: 50%; display:flex;flex-wrap: nowrap;flex-direction:column;justify-content:center;">
+            <div class = "tixing" style="flex-shrink: 0; font-size: 2cm;text-align: center;">貼心提醒</div>
+            <div class = "tixing" style="flex-shrink: 0; font-size: 2cm;text-align: center;">點餐可以用Enter</div>  
+            <h1></h1>
+            <div class = "pai" style="height: auto; width: auto;font-size: 1cm;display:flex; flex-wrap: nowrap;">等候人數&nbsp:&nbsp<span id = "number" style="align-self:flex-end">0</span></div>
+            <div class = "pai" style="height: auto; width: auto;font-size: 1cm;display:flex; flex-wrap: nowrap;"><div style="flex-shrink:0;">排隊客人 :&nbsp<span id = "queue" ></span></div></div>
+            <div class = "pai" style="font-size: 1cm;">目前客人 : <span id = "customer">請耐心等待客人的到來</span></div>
+            <h1></h1>
+            <div class = "ker"style = "flex-wrap:wrap; width: auto;font-size: 1cm;">客人點餐&nbsp:&nbsp<input type = "text" id = "Meals" style = "height: 50px;width: 200px;font-size: 1cm;" autofocus></div>
+            <h1></h1>
+            <div class = "ker" id = "can_queue" style = "display:flex;flex-wrap:nowrap; width: auto;font-size: 1cm;">已點餐點&nbsp:&nbsp</span></div>
+            <h1></h1>
+            <div class = "ker" id = "jia" style = "display:flex;flex-wrap:nowrap; width: auto;font-size: 1cm;">客人總價&nbsp:&nbsp</span></div>
+            <h1></h1>
+            <div>
+                <button id = "button_dian"onclick = "diancan()" style="height: 150px;width: 300px;font-size: 2cm; border-radius:50%;">點餐</button>
+                <button id = "button_check"onclick = "check()" style="height: 150px;width: 300px;font-size: 2cm; border-radius:50%;">結帳</button>
+            </div>
+            <h2>
+            <div class = "b_kdc" id = "ker" >客人&nbsp:&nbsp</div>
+            <div class = "b_kdc" id = "can" >餐點&nbsp:&nbsp</div>
+            <div class = "b_kdc" id = "keren_jia" >總價&nbsp:&nbsp</div>
+            </h2>
+
+            <script>
+                function Queue(){
+                    var items = []
+                    this.enqueue = function(element){
+                        items.push(element)
+                    }
+                    this.dequeue = function(){
+                        return items.shift();
+                    }
+                    this.front = function(){
+                        return items[0];
+                    }
+                    this.size = function(){
+                        return items.length;
+                    }
+                    this.print = function(){
+                        return items.toString();
+                    }
+                }
+
+                var can_value =[40,58,48,78,50,58,48,58,50,62] 
+
+                document.getElementById("Meals").addEventListener("keyup", function(event){
+                    if(event.key === "Enter"){
+                        document.getElementById("button_dian").click();
+                    }
+                });
+
+
+
+                var can_all = [],can_queue_str = `<span style ="flex-shrink:0; flex-grow:0">已點餐點&nbsp:&nbsp</span>`
+                var jia = 0,jia_str = `<span style ="flex-shrink:0; flex-grow:0">客人總價&nbsp:&nbsp</span>`
+                function diancan(){
+                    if (parseInt(document.getElementById("Meals").value) == document.getElementById("Meals").value&&Math.round(document.getElementById("Meals").value) == document.getElementById("Meals").value&& document.getElementById("Meals").value < 10 && document.getElementById("Meals").value >= 0){
+                        if (keren.front() != undefined){
+                            can_queue_str += `<span style="text-align:center;flex-basis:75px;flex-shrink:0;align-self:flex-end">${document.getElementById("Meals").value}</span>`
+                            jia += can_value[document.getElementById("Meals").value]
+                            jia_str = `<span style ="flex-shrink:0; flex-grow:0">客人總價&nbsp:&nbsp</span><span style="text-align:center;flex-basis:75px;flex-shrink:0;align-self:flex-end">${jia}</span>`
+                            can_all.push(document.getElementById("Meals").value)
+                            document.getElementById("can_queue").innerHTML = can_queue_str
+                            document.getElementById("jia").innerHTML = jia_str
+                        if (keren.front() === undefined){
+                            document.getElementById("customer").innerHTML = "目前沒有客人了！"
+                        }
+                        document.getElementById("Meals").value = ""
+                        document.getElementById("Meals").focus()
+                    }}
+                    else{
+                        document.getElementById("Meals").value = ""
+                        document.getElementById("Meals").focus()
+                        alert("沒有這個餐點！")        
+                    }
+                }
+
+
+                var ker_str = `<span style ="flex-shrink:0; flex-grow:0">客人&nbsp:&nbsp</span>`
+                var can_str = `<span style ="flex-shrink:0; flex-grow:0">餐點&nbsp:&nbsp</span>`
+                var keren_jia_str = `<span style ="flex-shrink:0; flex-grow:0">總價&nbsp:&nbsp</span>`
+                function check(){
+                    if (can_all.length != 0){
+                        ker_str += `<span class = "kdc" style="text-align:center;flex-shrink:0;align-self:flex-end;">${keren.front()}</span>`
+                        can_str += `<span title="${can_all.toString()}" class = "kdc" style="text-align:center;flex-shrink:2;align-self:flex-end">${can_all.toString()}</span>`
+                        keren_jia_str += `<span class = "kdc" style="text-align:center;flex-shrink:0;align-self:flex-end">${jia}</span>`
+                        jia = 0
+                        can_all = []
+                        can_queue_str = `<span style ="flex-shrink:0; flex-grow:0">已點餐點&nbsp:&nbsp</span>`
+                        document.getElementById("jia").innerHTML = `<span style ="flex-shrink:0; flex-grow:0">客人總價&nbsp:&nbsp</span>`
+                        document.getElementById("ker").innerHTML = ker_str
+                        document.getElementById("can").innerHTML = can_str
+                        document.getElementById("keren_jia").innerHTML = keren_jia_str
+                        document.getElementById("can_queue").innerHTML = can_queue_str
+                        keren.dequeue()
+                        document.getElementById("customer").innerText = keren.front()
+                        document.getElementById("number").innerHTML = keren.size()
+                        document.getElementById("queue").innerText = keren.print()
+                    }
+                    else{
+                        alert("客人還沒點餐")
+                    }
+
+                    document.getElementById("Meals").value = ""
+                    document.getElementById("Meals").focus()
+                    document.getElementById("queue").innerText = keren.print()
+                }
+
+                keren = new Queue
+                var i = 1
+                function KerenNumber(){
+                    keren.enqueue(i)
+                    i++
+                    document.getElementById("customer").innerText = keren.front()
+                    document.getElementById("number").innerHTML = keren.size()
+                    document.getElementById("queue").innerText = keren.print()
+                    if (keren.size() === 15){
+                        clearInterval(time);
+                        alert("客人太多，店員扛不住離職了(15個)")
+                    }
+                }
+
+                var time = setInterval(KerenNumber,5000,i)
+            </script>
+        </div>
+    </div>
+</body>
+</html>

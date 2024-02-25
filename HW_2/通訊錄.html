@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="b.css">
+</head>
+<body>
+    「我 汪博智 自己思考解決、絕無抄襲」<br>
+    <br>
+    載入通訊錄：<input type="file" id = "file" onchange="loadfile(this.files[0])"><br>
+    清空通訊錄：<button id = "file_delete" onclick="file_clear()">清空</button>
+    <div id="find_flex">
+        <select id="find_select">
+            <option>姓</option>
+            <option>名</option>
+            <option>全名</option>
+            <option>暱稱</option>
+            <option>住址</option>
+            <option>E-mail</option>
+        </select>
+        <input id = "find_text" type="text"></input>
+        <button id = "find_button" onclick="find()">搜尋</button>
+    </div>
+    <table id = "table" rules="all" cellpadding='3';>
+        <tr>
+            <th><input id = "all_checkbox" type="checkbox" onchange="all_checkbox()"></th>
+            <th>姓</th>
+            <th>名</th>
+            <th>全名</th>
+            <th>暱稱</th>
+            <th>住址</th>
+            <th><button id = "email_sort" onclick="email_sort()" value = "1">E-mail</button></th>
+            <th>
+                <select id = "menu" onchange="menu()">
+                    <option>分類</option>
+                    <option>顯示全部</option>
+                    <option>家人</option>
+                    <option>朋友</option>
+                    <option>同事</option>
+                </select>
+            </th>
+        </tr>
+    </table>
+    <button class="table_revise" id="revise" onclick="revise()" value = "1">修改模式</button>
+    <button class="table_revise" id="remove" onclick="remove()">刪除</button>
+    <button class="table_revise" id="back" onclick="back()">復原</button>
+    <button class="table_revise" id="save" onclick="save()">儲存</button><br>
+    檔案名稱：<input type = "text" id = "filename">
+    <button class="table_revise" id="download" onclick="download()">下載</button>
+    <div style="font-size: 7px;">請先儲存再進行下載。</div>
+    <table id = "new_table">
+        <caption>新增聯絡人</caption>
+        <tr>
+            <td>姓</td>
+            <td><input type="text" id = "surname"></td>
+        </tr>
+        <tr>
+            <td>名</td>
+            <td><input type="text" id = "name"></td>
+        </tr>
+        <tr>
+            <td>全名</td>
+            <td><input type="text" id = "allname"></td>
+        </tr>
+        <tr>
+            <td>暱稱</td>
+            <td><input type="text" id = "nickname"></td>
+        </tr>
+        <tr>
+            <td>住址</td>
+            <td><input type="text" id = "address"></td>
+        </tr>
+        <tr>
+            <td>E-mail</td>
+            <td><input type="text" id = "newemail"></td>
+        </tr>
+        <tr>
+            <td>分類</td>
+            <td>
+                <select id = newmenu>
+                    <option>分類</option>
+                    <option>家人</option>
+                    <option>朋友</option>
+                    <option>同事</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <button id = new_button onclick="new_button()">新增</button>&nbsp;(新增後將自動存檔)
+    <script src = "a.js">
+    </script>
+</body>
+</html>
